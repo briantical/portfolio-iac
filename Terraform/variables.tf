@@ -1,5 +1,3 @@
-variable "do_token" {}
-
 variable "droplet" {
   type = object({
     region = string
