@@ -24,7 +24,7 @@ variable "project" {
   })
   default = {
     name        = "Portfolio"
-    environment = "Production"
+    environment = "Development"
     purpose     = "Service or API"
     description = "Personal portfolio project"
   }
