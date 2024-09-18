@@ -1,13 +1,14 @@
 resource "digitalocean_droplet" "droplet" {
   monitoring = true
   ipv6       = true
+  ssh_keys   = var.ssh_key_list
   name       = var.droplet.name
   size       = var.droplet.size
   image      = var.droplet.image
   region     = var.droplet.region
 
   user_data = templatefile("${path.module}/templates/cloud-init.tftpl", {
-    tailscale_auth_key = var.tailscale.auth_key
+    tailscale_auth_key = var.tailscale_auth_key
   })
 
   tags = ["terraform", "portfolio"]

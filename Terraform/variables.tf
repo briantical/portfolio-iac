@@ -37,10 +37,13 @@ variable "domain" {
   }
 }
 
-variable "tailscale" {
-  type = object({
-    auth_key = string
-  })
+variable "tailscale_auth_key" {
+  type      = string
   sensitive = true
 }
 
+variable "ssh_key_list" {
+  type      = list(string)
+  sensitive = true
+  default   = []
+}
