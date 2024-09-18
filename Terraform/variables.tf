@@ -37,3 +37,10 @@ variable "domain" {
   }
 }
 
+variable "tailscale" {
+  type = object({
+    auth_key = string
+  })
+  sensitive = true
+}
+

@@ -1,5 +1,3 @@
-
-
 resource "digitalocean_droplet" "droplet" {
   monitoring = true
   ipv6       = true
@@ -8,13 +6,16 @@ resource "digitalocean_droplet" "droplet" {
   image      = var.droplet.image
   region     = var.droplet.region
 
-  tags = ["Terraform", "Portfolio"]
+  user_data = templatefile("${path.module}/templates/cloud-init.tftpl", {
+    tailscale_auth_key = var.tailscale.auth_key
+  })
+
+  tags = ["terraform", "portfolio"]
 }
 
 resource "digitalocean_domain" "domain" {
   name = var.domain.name
 }
-
 
 resource "digitalocean_project" "project" {
   name        = var.project.name
