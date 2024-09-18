@@ -9,7 +9,7 @@ variable "droplet" {
     region = "fra1"
     name   = "portfolio"
     size   = "s-1vcpu-1gb"
-    image  = "118857366"
+    image  = "ubuntu-20-04-x64"
   }
 }
 
