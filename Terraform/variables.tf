@@ -3,13 +3,11 @@ variable "droplet" {
     region = string
     name   = string
     size   = string
-    image  = string
   })
   default = {
     region = "fra1"
     name   = "portfolio"
     size   = "s-1vcpu-1gb"
-    image  = "ubuntu-20-04-x64"
   }
 }
 
@@ -41,4 +39,15 @@ variable "ssh_key_list" {
   type      = list(string)
   sensitive = true
   default   = []
+}
+
+variable "snapshot" {
+  type = object({
+    region     = string
+    name_regex = string
+  })
+  default = {
+    region     = "fra1"
+    name_regex = "briantical-"
+  }
 }
