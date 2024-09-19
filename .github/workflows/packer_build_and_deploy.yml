@@ -1,0 +1,42 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - "master"
+
+env:
+  HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+  HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
+  DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
+jobs:
+  build-artifact:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Packer
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            Packer:
+              - 'Packer/**'
+
+      - name: Setup Packer
+        if: steps.changes.outputs.Packer == 'true'
+        uses: hashicorp/setup-packer@main
+        id: setup
+
+      - name: Packer Init
+        if: steps.changes.outputs.Packer == 'true'
+        run: packer init .
+
+      - name: Packer Build
+        if: steps.changes.outputs.Packer == 'true'
+        run: packer build --var tailscale_auth_key=${{ secrets.TAILSCALE_AUTH_KEY }} .

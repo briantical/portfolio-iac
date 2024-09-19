@@ -7,10 +7,6 @@ resource "digitalocean_droplet" "droplet" {
   image      = var.droplet.image
   region     = var.droplet.region
 
-  user_data = templatefile("${path.module}/templates/cloud-init.tftpl", {
-    tailscale_auth_key = var.tailscale_auth_key
-  })
-
   tags = ["terraform", "portfolio"]
 }
 
