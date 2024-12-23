@@ -35,10 +35,9 @@ variable "domain" {
   }
 }
 
-variable "ssh_key_list" {
-  type      = list(string)
-  sensitive = true
-  default   = []
+variable "ssh_key_name" {
+  type    = string
+  default = "briantical"
 }
 
 variable "snapshot" {

@@ -1,3 +1,7 @@
+data "digitalocean_ssh_key" "ssh_key" {
+  name = var.ssh_key_name
+}
+
 data "digitalocean_droplet_snapshot" "snapshot" {
   most_recent = true
   region      = var.snapshot.region
@@ -7,11 +11,11 @@ data "digitalocean_droplet_snapshot" "snapshot" {
 resource "digitalocean_droplet" "droplet" {
   monitoring = true
   ipv6       = true
-  # ssh_keys   = var.ssh_key_list
-  name   = var.droplet.name
-  size   = var.droplet.size
-  region = var.droplet.region
-  image  = data.digitalocean_droplet_snapshot.snapshot.id
+  name       = var.droplet.name
+  size       = var.droplet.size
+  region     = var.droplet.region
+  ssh_keys   = [data.digitalocean_ssh_key.ssh_key.id]
+  image      = data.digitalocean_droplet_snapshot.snapshot.id
 
   tags = ["terraform", "portfolio"]
 }
