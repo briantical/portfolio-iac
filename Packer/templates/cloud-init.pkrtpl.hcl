@@ -54,10 +54,15 @@ runcmd:
     - mv certificate.pub /etc/ssh/certificate.pub
     - chmod 644 /etc/ssh/certificate.pub
     - chown root:root /etc/ssh/certificate.pub
+
+    - mv portfolio-cert.pub /etc/ssh/id_ed25519-cert.pub
+    - chmod 644 /etc/ssh/id_ed25519-cert.pub
+    - chown root:root /etc/ssh/id_ed25519-cert.pub
     - tee -a /etc/ssh/sshd_config << EOF
         # Root CA SSH Config
         PubkeyAuthentication yes
-        TrustedUserCAKeys /etc/ssh/numida_ca.pub
+        TrustedUserCAKeys /etc/ssh/certificate.pub
+        HostCertificate /etc/ssh/id_ed25519-cert.pub
         EOF
     - systemctl try-restart ssh
 

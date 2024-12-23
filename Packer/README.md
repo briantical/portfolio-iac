@@ -1,5 +1,8 @@
 # Packer
 
+- Initialize packer `packer init .`
+- Build image `packer build .`
+
 ## Resources
 
 - Packer Registry - [Push artifact metadata to the HCP Packer registry](https://developer.hashicorp.com/packer/tutorials/hcp-get-started/hcp-push-artifact-metadata?in=packer%2Fhcp-get-started)
