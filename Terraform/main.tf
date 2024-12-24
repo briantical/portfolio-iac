@@ -19,6 +19,8 @@ resource "digitalocean_droplet" "droplet" {
   user_data  = <<EOF
 #!/bin/bash
 sudo tailscale up --auth-key=${var.tailscale_auth_key}
+sudo tailscale set --ssh
+sudo tailscale set --advertise-exit-node
   EOF
 
   tags = ["terraform", "portfolio"]
