@@ -40,6 +40,11 @@ variable "ssh_key_name" {
   default = "briantical"
 }
 
+variable "tailscale_auth_key" {
+  type      = string
+  sensitive = true
+}
+
 variable "snapshot" {
   type = object({
     region     = string

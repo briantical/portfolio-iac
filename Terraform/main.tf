@@ -16,6 +16,10 @@ resource "digitalocean_droplet" "droplet" {
   region     = var.droplet.region
   ssh_keys   = [data.digitalocean_ssh_key.ssh_key.id]
   image      = data.digitalocean_droplet_snapshot.snapshot.id
+  user_data  = <<EOF
+#!/bin/bash
+sudo tailscale up --auth-key=${var.tailscale_auth_key}
+  EOF
 
   tags = ["terraform", "portfolio"]
 }

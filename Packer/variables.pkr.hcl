@@ -26,11 +26,6 @@ variable "source" {
   }
 }
 
-variable "tailscale_auth_key" {
-  type      = string
-  sensitive = true
-}
-
 variable "ssh_username" {
   type      = string
   default   = "root"

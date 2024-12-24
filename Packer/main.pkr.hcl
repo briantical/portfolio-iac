@@ -17,10 +17,6 @@ source "digitalocean" "source" {
   image         = var.source.image
   region        = var.source.region
   snapshot_name = "${var.source.snapshot_name}-{{timestamp}}"
-
-  user_data = templatefile("${path.root}/templates/cloud-init.pkrtpl.hcl", {
-    tailscale_auth_key = var.tailscale_auth_key,
-  })
 }
 
 build {
@@ -38,11 +34,19 @@ build {
   sources = ["source.digitalocean.source"]
 
   provisioner "file" {
-    source      = "./files/certificate.pub"
-    destination = "/home/${var.ssh_username}/"
+    sources      = ["files/certificate.pub", "files/portfolio-cert.pub"]
+    destination = "/root/"
   }
 
   provisioner "shell" {
-    inline = ["echo 'Waiting for cloud-init'; while [ ! -f /var/lib/cloud/instance/boot-finished ]; do sleep 1; done; echo 'Done'"]
+    script = "scripts/init.sh"
+  }
+
+  provisioner "shell" {
+    script = "scripts/tailscale.sh"
+  }
+
+  provisioner "shell" {
+    script = "scripts/cleanup.sh"
   }
 }

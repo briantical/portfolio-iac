@@ -39,4 +39,4 @@ jobs:
 
       - name: Packer Build
         if: steps.changes.outputs.Packer == 'true'
-        run: packer build --var tailscale_auth_key=${{ secrets.TAILSCALE_AUTH_KEY }} .
+        run: packer build .
